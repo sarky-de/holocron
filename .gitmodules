@@ -1,0 +1,6 @@
+[submodule "xwing-data"]
+	path = xwing-data
+	url = https://github.com/guidokessels/xwing-data.git
+[submodule "public/xwing-ship-images"]
+	path = public/xwing-ship-images
+	url = https://github.com/acosoi/xwing-ship-images.git

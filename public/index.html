@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <title>X-Wing</title>
+  </head>
+  
+  <body class="bg-gray-100">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-semibold mb-4">X-Wing Data Viewer</h1>
+      <div class="flex">
+        <div class="w-1/3">
+          <label for="data-type" class="block text-sm font-medium text-gray-700">Select Data Type:</label>
+          <select id="data-type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            <!-- Dynamically populated data types -->
+          </select>
+          <ul class="mt-4 space-y-2 pilot-list">
+            <!-- Dynamically populated data list -->
+          </ul>
+        </div>
+        <div class="w-2/3 ml-6">
+          <div id="data-details">
+            <!-- Selected data details will be displayed here -->
+          </div>
+          <div id="card-image">
+            <!-- Card image will be displayed here -->
+          </div>
+<!-- Add a button to add cards to the inventory -->
+<button id="add-card-button">Add Card to Inventory</button>
+
+<!-- Add a button to remove cards from the inventory -->
+<button id="remove-card-button" style="display:none;">Remove Card from Inventory</button>
+
+<div id="inventory">
+    <h2>Your Inventory</h2>
+    <ul id="inventory-list">
+        <!-- Inventory items will be displayed here -->
+    </ul>
+</div>                    
+        </div>
+      </div>
+    </div>
+    
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "Holocron",
+  "version": "0.1.0",
+  "description": "Inventory management and squad builder for X-Wing The Miniatures Game 1.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "polka": "^0.5.2",
+    "serve-static": "^1.15.0",
+    "tailwindcss": "^3.4.0"
+  }
+}

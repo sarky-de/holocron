@@ -2,6 +2,7 @@ const polka = require('polka');
 const path = require('path');
 const fs = require('fs');
 const serve = require('serve-static');
+const cors = require('cors')({ origin: true });
 
 let data = [];
 const inventory = [];
@@ -41,7 +42,12 @@ function dataHandler(req, res) {
     let result = [];
     for (let i = 0; i < categoryData.length; i++) {
         const item = categoryData[i];
-        result.push({ name: item.name, cardId: item.xws });
+        if (category == 'ships') {
+            imageUrl = `xwing-ship-images/${item.image}`;
+        } else {
+            imageUrl = `images/${item.image}`;
+        }
+        result.push({ name: item.name, cardId: item.xws, image: imageUrl });
     }
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -109,7 +115,7 @@ function inventoryDeleteHandler(req, res) {
 }
 
 polka()
-    .use(serve(path.join(__dirname, 'public')))
+    .use(serve(path.join(__dirname, 'public')), cors)
     .get('/data', categoriesHandler)
     .get('/data/:category', dataHandler)
     .get('/card/:cardId', cardHandler)

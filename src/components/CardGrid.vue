@@ -14,6 +14,12 @@
                 <v-card>
                     <v-img :src="entry.image" height="60%"></v-img>
                     <v-card-title>{{ entry.name }}</v-card-title>
+                    <v-card-actions>
+                        <v-btn color="green" @click="add(entry.cardId)">Add</v-btn>
+                        <v-btn color="red" @click="remove(entry.cardId)" v-if="has(entry.cardId)"
+                            >Remove</v-btn
+                        >
+                    </v-card-actions>
                 </v-card>
             </v-col>
         </v-row>
@@ -22,8 +28,17 @@
 
 <script>
 import axios from 'axios';
+import { useInventoryStore } from '@/stores/inventory';
 
 export default {
+    setup() {
+        const inventory = useInventoryStore();
+        const add = (cardId) => inventory.add(cardId);
+        const remove = (cardId) => inventory.remove(cardId);
+        const has = (cardId) => inventory.has(cardId);
+
+        return { add, remove, has };
+    },
     data() {
         return {
             entries: [],

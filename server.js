@@ -57,13 +57,13 @@ function dataHandler(req, res) {
 */
 
 function allDataHander(req, res) {
-    let result = []; 
+    let result = [];
 
     for (const category in data) {
         const categoryData = data[category];
         for (let i = 0; i < categoryData.length; i++) {
             const item = categoryData[i];
-            
+
             let imageUrl;
             if (category == 'ships') {
                 imageUrl = `xwing-ship-images/images/${item.image}`;
@@ -71,11 +71,11 @@ function allDataHander(req, res) {
                 imageUrl = `images/${item.image}`;
             }
 
-            result.push({ 
-                name: item.name, 
-                cardId: item.xws, 
+            result.push({
+                name: item.name,
+                cardId: item.xws,
                 image: imageUrl,
-                category: category, 
+                category: category,
             });
         };
     }
@@ -86,7 +86,7 @@ function allDataHander(req, res) {
 
 function cardHandler(req, res) {
     const { cardId } = req.params;
-    let result = {}; 
+    let result = {};
 
     for (const category in data) {
         const categoryData = data[category];
@@ -94,8 +94,8 @@ function cardHandler(req, res) {
             const item = categoryData[i];
             if (item.xws === cardId) {
                 result = item;
-                break;    
-            } 
+                break;
+            }
         };
     }
 
@@ -121,6 +121,8 @@ function inventoryAddHandler(req, res) {
         inventory.push(result);
     }
 
+    console.log("Added to inventory", cardId);
+
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(result));
 }
@@ -138,7 +140,9 @@ function inventoryDeleteHandler(req, res) {
             result = inventory.splice(index, 1);
         }
     }
-  
+
+    console.log("Removed from inventory", cardId);
+
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(result));
 }

@@ -8,14 +8,14 @@ let data = [];
 const inventory = [];
 
 const categories = [
-    'conditions',
-    'damage-deck-core-tfa',
-    'damage-deck-core',
-    'damage-deck-rebel-transport',
+    //'conditions',
+    //'damage-deck-core-tfa',
+    //'damage-deck-core',
+    //'damage-deck-rebel-transport',
     'pilots',
-    'reference-cards',
+    //'reference-cards',
     'ships',
-    'sources',
+    //'sources',
     'upgrades',
 ];
 
@@ -35,6 +35,7 @@ function categoriesHandler(req, res) {
     res.end(JSON.stringify(categories));
 }
 
+/*
 function dataHandler(req, res) {
     const { category } = req.params;
     let categoryData = data[category] ?? [];
@@ -43,11 +44,40 @@ function dataHandler(req, res) {
     for (let i = 0; i < categoryData.length; i++) {
         const item = categoryData[i];
         if (category == 'ships') {
-            imageUrl = `xwing-ship-images/${item.image}`;
+            imageUrl = `xwing-ship-images/images/${item.image}`;
         } else {
             imageUrl = `images/${item.image}`;
         }
         result.push({ name: item.name, cardId: item.xws, image: imageUrl });
+    }
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(result));
+}
+*/
+
+function allDataHander(req, res) {
+    let result = []; 
+
+    for (const category in data) {
+        const categoryData = data[category];
+        for (let i = 0; i < categoryData.length; i++) {
+            const item = categoryData[i];
+            
+            let imageUrl;
+            if (category == 'ships') {
+                imageUrl = `xwing-ship-images/images/${item.image}`;
+            } else {
+                imageUrl = `images/${item.image}`;
+            }
+
+            result.push({ 
+                name: item.name, 
+                cardId: item.xws, 
+                image: imageUrl,
+                category: category, 
+            });
+        };
     }
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -59,7 +89,6 @@ function cardHandler(req, res) {
     let result = {}; 
 
     for (const category in data) {
-        console.log(category);
         const categoryData = data[category];
         for (let i = 0; i < categoryData.length; i++) {
             const item = categoryData[i];
@@ -117,7 +146,8 @@ function inventoryDeleteHandler(req, res) {
 polka()
     .use(serve(path.join(__dirname, 'public')), cors)
     .get('/data', categoriesHandler)
-    .get('/data/:category', dataHandler)
+    .get('/data/all', allDataHander)
+    //.get('/data/:category', dataHandler)
     .get('/card/:cardId', cardHandler)
     .get('/inventory', inventoryHandler)
     .put('/inventory/:cardId', inventoryAddHandler)
